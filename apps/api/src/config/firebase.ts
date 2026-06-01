@@ -8,22 +8,40 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 if (!admin.apps.length) {
   try {
-    const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT;
+    let serviceAccountVar = process.env.FIREBASE_SERVICE_ACCOUNT;
 
-    console.log("ENV FIREBASE_SERVICE_ACCOUNT:", serviceAccountPath);
-
-    if (!serviceAccountPath) {
+    if (!serviceAccountVar) {
       throw new Error("FIREBASE_SERVICE_ACCOUNT is not set in .env");
     }
 
-    // Resolve path relative to apps/api/ folder
-    const resolvedPath = path.resolve(__dirname, "../../", serviceAccountPath);
-    console.log("Resolved JSON path:", resolvedPath);
-    console.log("File exists:", fs.existsSync(resolvedPath));
+    let serviceAccount: any = null;
 
-    const serviceAccount = JSON.parse(
-      fs.readFileSync(resolvedPath, "utf8")
-    );
+    // Try parsing as JSON directly
+    try {
+      serviceAccount = JSON.parse(serviceAccountVar);
+    } catch (e) {
+      // Not direct JSON
+    }
+
+    // Try parsing as Base64
+    if (!serviceAccount) {
+      try {
+        const decoded = Buffer.from(serviceAccountVar, 'base64').toString('utf8');
+        serviceAccount = JSON.parse(decoded);
+      } catch (e) {
+        // Not Base64
+      }
+    }
+
+    // Fallback to local file path (for development)
+    if (!serviceAccount) {
+      const resolvedPath = path.resolve(__dirname, "../../", serviceAccountVar);
+      if (fs.existsSync(resolvedPath)) {
+        serviceAccount = JSON.parse(fs.readFileSync(resolvedPath, "utf8"));
+      } else {
+        throw new Error("FIREBASE_SERVICE_ACCOUNT is neither a valid JSON, Base64 string, nor a valid file path.");
+      }
+    }
 
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
