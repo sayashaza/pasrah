@@ -8,7 +8,7 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 if (!admin.apps.length) {
   try {
-    let serviceAccountVar = process.env.FIREBASE_SERVICE_ACCOUNT;
+    let serviceAccountVar = process.env.FIREBASE_SERVICE_ACCOUNT?.trim();
 
     if (!serviceAccountVar) {
       throw new Error("FIREBASE_SERVICE_ACCOUNT is not set in .env");
@@ -19,6 +19,7 @@ if (!admin.apps.length) {
     // Try parsing as JSON directly
     try {
       serviceAccount = JSON.parse(serviceAccountVar);
+      console.log("Firebase config parsed as direct JSON");
     } catch (e) {
       // Not direct JSON
     }
@@ -28,6 +29,7 @@ if (!admin.apps.length) {
       try {
         const decoded = Buffer.from(serviceAccountVar, 'base64').toString('utf8');
         serviceAccount = JSON.parse(decoded);
+        console.log("Firebase config parsed as Base64");
       } catch (e) {
         // Not Base64
       }
@@ -38,8 +40,9 @@ if (!admin.apps.length) {
       const resolvedPath = path.resolve(__dirname, "../../", serviceAccountVar);
       if (fs.existsSync(resolvedPath)) {
         serviceAccount = JSON.parse(fs.readFileSync(resolvedPath, "utf8"));
+        console.log("Firebase config loaded from file:", resolvedPath);
       } else {
-        throw new Error("FIREBASE_SERVICE_ACCOUNT is neither a valid JSON, Base64 string, nor a valid file path.");
+        throw new Error(`FIREBASE_SERVICE_ACCOUNT is neither a valid JSON, Base64 string, nor a valid file path. Length: ${serviceAccountVar.length}`);
       }
     }
 
@@ -50,10 +53,11 @@ if (!admin.apps.length) {
 
     console.log("✅ Firebase Admin initialized successfully.");
   } catch (error) {
-    console.error("Firebase Admin initialization error", error);
+    console.error("❌ Firebase Admin initialization error:", error);
   }
 }
 
+// Export safely without breaking TS inference
 export const db = admin.firestore();
 export const auth = admin.auth();
 export const storage = admin.storage();
