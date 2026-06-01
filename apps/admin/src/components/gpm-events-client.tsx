@@ -129,7 +129,7 @@ export default function GpmEventsClient() {
               <Label>Status</Label>
               <Select
                 value={formData.status}
-                onValueChange={(v) => setFormData({ ...formData, status: v })}
+                onValueChange={(v) => setFormData({ ...formData, status: v ?? 'draft' })}
               >
                 <SelectTrigger><SelectValue placeholder="Select Status" /></SelectTrigger>
                 <SelectContent>
