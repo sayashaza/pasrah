@@ -37,10 +37,19 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
     const price = typeof req.body.price === 'string' ? parseFloat(req.body.price) : req.body.price;
     const stock = typeof req.body.stock === 'string' ? parseInt(req.body.stock, 10) : req.body.stock;
 
+    // GPM Fields
+    const regular_price = req.body.regular_price ? (typeof req.body.regular_price === 'string' ? parseFloat(req.body.regular_price) : req.body.regular_price) : undefined;
+    const gpm_price = req.body.gpm_price ? (typeof req.body.gpm_price === 'string' ? parseFloat(req.body.gpm_price) : req.body.gpm_price) : undefined;
+    const is_gpm_product = req.body.is_gpm_product === 'true' || req.body.is_gpm_product === true;
+
     const newProduct = { 
       ...req.body, 
       price, 
       stock, 
+      regular_price,
+      gpm_price,
+      is_gpm_product,
+      vendor_id: req.body.vendor_id || null,
       image: imageUrl, 
       createdAt: new Date().toISOString() 
     };
@@ -64,6 +73,10 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
     
     if (updateData.price) updateData.price = typeof updateData.price === 'string' ? parseFloat(updateData.price) : updateData.price;
     if (updateData.stock) updateData.stock = typeof updateData.stock === 'string' ? parseInt(updateData.stock, 10) : updateData.stock;
+
+    if (updateData.regular_price) updateData.regular_price = typeof updateData.regular_price === 'string' ? parseFloat(updateData.regular_price) : updateData.regular_price;
+    if (updateData.gpm_price) updateData.gpm_price = typeof updateData.gpm_price === 'string' ? parseFloat(updateData.gpm_price) : updateData.gpm_price;
+    if (updateData.is_gpm_product !== undefined) updateData.is_gpm_product = updateData.is_gpm_product === 'true' || updateData.is_gpm_product === true;
 
     await db.collection('products').doc(req.params.id).update(updateData);
     res.json({ id: req.params.id, ...updateData });

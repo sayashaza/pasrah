@@ -45,6 +45,12 @@ export default function WelcomeScreen() {
           <Text style={styles.createButtonText}>Create an account</Text>
         </TouchableOpacity>
 
+        {/* Custom Auth: Phone + PIN */}
+        <TouchableOpacity style={[styles.googleButton, { marginBottom: 20 }]} onPress={() => router.push('/(auth)/login-phone')}>
+          <View style={styles.placeholderIcon} />
+          <Text style={styles.googleButtonText}>Login with Phone (GPM)</Text>
+        </TouchableOpacity>
+
         {/* Login Link */}
         <TouchableOpacity style={styles.loginLinkContainer} onPress={() => router.push('/(auth)/login')}>
           <Text style={styles.loginText}>

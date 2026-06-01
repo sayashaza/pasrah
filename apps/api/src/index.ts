@@ -8,6 +8,8 @@ import userRoutes from "./routes/user.routes";
 import categoryRoutes from "./routes/category.routes";
 import brandRoutes from "./routes/brand.routes";
 import bannerRoutes from "./routes/banner.routes";
+import gpmRoutes from "./routes/gpm.routes";
+import transactionRoutes from "./routes/transaction.routes";
 
 dotenv.config();
 
@@ -29,6 +31,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/brands", brandRoutes);
 app.use("/api/banners", bannerRoutes);
+app.use("/api/gpm", gpmRoutes);
+app.use("/api/transactions", transactionRoutes);
 
 app.get("/health", (req: Request, res: Response) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });

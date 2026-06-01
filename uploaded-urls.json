@@ -1,0 +1,104 @@
+{
+  "banners": [
+    {
+      "name": "banner-1.jpg",
+      "folder": "banners",
+      "public_id": "bigcart/banners/banner-1",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270349/bigcart/banners/banner-1.jpg"
+    }
+  ],
+  "categories": [
+    {
+      "name": "babycare.svg",
+      "folder": "categories",
+      "public_id": "bigcart/categories/babycare",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270350/bigcart/categories/babycare.svg"
+    },
+    {
+      "name": "bevarages.svg",
+      "folder": "categories",
+      "public_id": "bigcart/categories/bevarages",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270352/bigcart/categories/bevarages.svg"
+    },
+    {
+      "name": "edibale oil.svg",
+      "folder": "categories",
+      "public_id": "bigcart/categories/edibale oil",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270353/bigcart/categories/edibale%20oil.svg"
+    },
+    {
+      "name": "fruits.svg",
+      "folder": "categories",
+      "public_id": "bigcart/categories/fruits",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270355/bigcart/categories/fruits.svg"
+    },
+    {
+      "name": "grocery.svg",
+      "folder": "categories",
+      "public_id": "bigcart/categories/grocery",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270357/bigcart/categories/grocery.svg"
+    },
+    {
+      "name": "household.svg",
+      "folder": "categories",
+      "public_id": "bigcart/categories/household",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270358/bigcart/categories/household.svg"
+    },
+    {
+      "name": "vegetable.svg",
+      "folder": "categories",
+      "public_id": "bigcart/categories/vegetable",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270360/bigcart/categories/vegetable.svg"
+    }
+  ],
+  "products": [
+    {
+      "name": "avacado.png",
+      "folder": "products",
+      "public_id": "bigcart/products/avacado",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270366/bigcart/products/avacado.png"
+    },
+    {
+      "name": "fresh brocoli.png",
+      "folder": "products",
+      "public_id": "bigcart/products/fresh brocoli",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270388/bigcart/products/fresh%20brocoli.png"
+    },
+    {
+      "name": "fresh peach.png",
+      "folder": "products",
+      "public_id": "bigcart/products/fresh peach",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270396/bigcart/products/fresh%20peach.png"
+    },
+    {
+      "name": "lemons.png",
+      "folder": "products",
+      "public_id": "bigcart/products/lemons",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270402/bigcart/products/lemons.png"
+    },
+    {
+      "name": "pineapple.png",
+      "folder": "products",
+      "public_id": "bigcart/products/pineapple",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270424/bigcart/products/pineapple.png"
+    },
+    {
+      "name": "pomegranate.png",
+      "folder": "products",
+      "public_id": "bigcart/products/pomegranate",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270441/bigcart/products/pomegranate.png"
+    },
+    {
+      "name": "red grapes.png",
+      "folder": "products",
+      "public_id": "bigcart/products/red grapes",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270444/bigcart/products/red%20grapes.png"
+    },
+    {
+      "name": "splash-1.jpg",
+      "folder": "products",
+      "public_id": "bigcart/products/splash-1",
+      "url": "https://res.cloudinary.com/darslervz/image/upload/v1780270467/bigcart/products/splash-1.jpg"
+    }
+  ]
+}

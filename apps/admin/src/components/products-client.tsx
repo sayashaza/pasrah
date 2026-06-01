@@ -55,6 +55,10 @@ export default function ProductsPage() {
     stock: "",
     categoryId: "",
     brandId: "",
+    is_gpm_product: false,
+    regular_price: "",
+    gpm_price: "",
+    vendor_id: "",
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
 
@@ -90,6 +94,10 @@ export default function ProductsPage() {
       stock: product.stock?.toString() || "",
       categoryId: product.category || "",
       brandId: product.brand || "",
+      is_gpm_product: product.is_gpm_product || false,
+      regular_price: product.regular_price?.toString() || "",
+      gpm_price: product.gpm_price?.toString() || "",
+      vendor_id: product.vendor_id || "",
     });
     setImageFile(null);
     setIsSheetOpen(true);
@@ -150,6 +158,10 @@ export default function ProductsPage() {
         stock: "",
         categoryId: "",
         brandId: "",
+        is_gpm_product: false,
+        regular_price: "",
+        gpm_price: "",
+        vendor_id: "",
       });
       setImageFile(null);
       loadData();
@@ -266,11 +278,10 @@ export default function ProductsPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="price">Price ($)</Label>
+                <Label htmlFor="price">Price (IDR)</Label>
                 <Input
                   id="price"
                   type="number"
-                  step="0.01"
                   required
                   value={formData.price}
                   onChange={(e) =>
@@ -290,6 +301,52 @@ export default function ProductsPage() {
                   }
                 />
               </div>
+            </div>
+
+            <div className="space-y-4 border p-4 rounded-md bg-muted/10">
+              <div className="flex items-center space-x-2">
+                <input 
+                  type="checkbox" 
+                  id="isGpm" 
+                  className="h-4 w-4"
+                  checked={formData.is_gpm_product}
+                  onChange={(e) => setFormData({ ...formData, is_gpm_product: e.target.checked })}
+                />
+                <Label htmlFor="isGpm" className="font-semibold text-primary">Is GPM Product (Gerakan Pangan Murah)</Label>
+              </div>
+              
+              {formData.is_gpm_product && (
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="regularPrice">Regular Price (IDR)</Label>
+                    <Input
+                      id="regularPrice"
+                      type="number"
+                      value={formData.regular_price}
+                      onChange={(e) => setFormData({ ...formData, regular_price: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="gpmPrice">GPM Price (IDR)</Label>
+                    <Input
+                      id="gpmPrice"
+                      type="number"
+                      required={formData.is_gpm_product}
+                      value={formData.gpm_price}
+                      onChange={(e) => setFormData({ ...formData, gpm_price: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2 col-span-2">
+                    <Label htmlFor="vendorId">Vendor ID (Distributor)</Label>
+                    <Input
+                      id="vendorId"
+                      placeholder="Optional. ID of the vendor/distributor"
+                      value={formData.vendor_id}
+                      onChange={(e) => setFormData({ ...formData, vendor_id: e.target.value })}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -388,7 +445,12 @@ export default function ProductsPage() {
                     <TableCell>{p.category}</TableCell>
                     <TableCell>{p.brand}</TableCell>
                     <TableCell className="text-primary font-semibold">
-                      ${p.price?.toFixed(2)}
+                      Rp{p.price?.toLocaleString('id-ID')}
+                      {p.is_gpm_product && (
+                        <span className="ml-2 inline-flex items-center rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800">
+                          GPM
+                        </span>
+                      )}
                     </TableCell>
                     <TableCell>{p.stock} units</TableCell>
                     <TableCell className="text-right">

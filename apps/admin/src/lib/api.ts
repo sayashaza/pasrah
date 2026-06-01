@@ -30,6 +30,13 @@ export const fetchApi = async (endpoint: string, options: RequestInit = {}) => {
 
     const data = await response.json();
     if (!response.ok) {
+      if (response.status === 401 || data.message === 'Token Expired') {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('adminToken');
+          localStorage.removeItem('adminUser');
+          window.location.href = '/login';
+        }
+      }
       throw new Error(data.message || 'API request failed');
     }
 

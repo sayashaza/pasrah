@@ -51,7 +51,11 @@ export default function ProductCard({ prod, index }: ProductCardProps) {
         <View style={[styles.productCircle, { backgroundColor: circleColor }]} />
 
         {/* Product Header Badges */}
-        {prod.discount ? (
+        {prod.is_gpm_product ? (
+          <View style={[styles.discountBadge, { backgroundColor: '#dcfce7' }]}>
+            <Text style={[styles.discountText, { color: '#166534' }]}>GPM</Text>
+          </View>
+        ) : prod.discount ? (
           <View style={styles.discountBadge}>
             <Text style={styles.discountText}>{prod.discount}</Text>
           </View>
@@ -70,7 +74,7 @@ export default function ProductCard({ prod, index }: ProductCardProps) {
 
         {/* Product Details */}
         <Text style={styles.productPrice}>
-          ${Number(prod.price).toFixed(2)}
+          Rp{(prod.is_gpm_product && prod.gpm_price ? prod.gpm_price : prod.price)?.toLocaleString('id-ID')}
         </Text>
         <Text style={styles.productName}>{prod.name}</Text>
         <Text style={styles.productWeight}>{prod.stock} units</Text>

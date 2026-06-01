@@ -21,6 +21,9 @@ import {
   ShoppingCart,
   Users,
   Image as ImageIcon,
+  CalendarDays,
+  Warehouse,
+  BarChart3,
 } from "lucide-react";
 
 const items = [
@@ -31,6 +34,12 @@ const items = [
   { title: "Brands", url: "/brands", icon: Tags },
   { title: "Orders", url: "/orders", icon: ShoppingCart },
   { title: "Customers", url: "/users", icon: Users },
+];
+
+const gpmItems = [
+  { title: "Events", url: "/gpm/events", icon: CalendarDays },
+  { title: "Stocks", url: "/gpm/stocks", icon: Warehouse },
+  { title: "Reports", url: "/gpm/reports", icon: BarChart3 },
 ];
 
 export function AppSidebar() {
@@ -62,6 +71,32 @@ export function AppSidebar() {
                       }
                     >
                       <item.icon className={isActive ? "text-primary" : ""} />
+                      <span>{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-orange-500">🌾 GPM</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {gpmItems.map((item) => {
+                const isActive = pathname.startsWith(item.url);
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      render={<Link href={item.url} />}
+                      isActive={isActive}
+                      className={
+                        isActive
+                          ? "bg-orange-50 text-orange-600 font-medium hover:bg-orange-50 hover:text-orange-600 transition-all"
+                          : "text-muted-foreground hover:text-foreground transition-all"
+                      }
+                    >
+                      <item.icon className={isActive ? "text-orange-500" : ""} />
                       <span>{item.title}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

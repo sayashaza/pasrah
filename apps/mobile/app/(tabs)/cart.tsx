@@ -10,6 +10,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { colors, typography } from '../../theme/colors';
 import { useCartStore } from '../../store/useCartStore';
 import CartItem from '../../components/CartItem';
+import { fetchApi } from '../../utils/api';
 
 export default function CartScreen() {
   const router = useRouter();
@@ -44,29 +45,44 @@ export default function CartScreen() {
       return;
     }
     
-    if (!user || !user.email) {
+    if (!user || (!user.email && !user.phoneNumber)) {
       Toast.show({ type: 'error', text1: 'Please login to checkout', position: 'top' });
-      router.push('/profile');
+      router.push('/(auth)/welcome');
       return;
     }
 
     setIsProcessing(true);
     try {
-      const orderData = {
-        items,
-        subtotal,
-        shipping,
-        total,
-        status: 'Processing',
-        createdAt: new Date().toISOString()
-      };
+      const mappedItems = items.map(item => ({
+        product_id: item.id,
+        name: item.name,
+        price: item.is_gpm_product && item.gpm_price ? item.gpm_price : item.price,
+        quantity: item.quantity,
+        vendor_id: item.vendor_id || "general",
+        is_gpm: !!item.is_gpm_product
+      }));
       
-      const ordersRef = collection(db, 'orders', user.email, 'userOrders');
-      await addDoc(ordersRef, orderData);
+      const payload = {
+        items: mappedItems,
+        customer_id: user.uid,
+        customer_name: user.displayName || user.phoneNumber || "Customer"
+      };
+
+      const res = await fetchApi('/transactions/place-order', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+      });
       
       Toast.show({ type: 'success', text1: 'Order placed successfully!', position: 'top' });
       clearCart();
-      router.push('/profile/orders');
+      
+      // Navigate to success screen which will show the QR Code
+      if (res && res.orderId) {
+        router.push(`/order-success?orderId=${res.orderId}` as any);
+      } else {
+        router.push('/profile/orders');
+      }
     } catch (e) {
       console.error(e);
       Toast.show({ type: 'error', text1: 'Failed to place order', text2: 'Please try again later', position: 'top' });
