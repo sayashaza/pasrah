@@ -190,6 +190,10 @@ export default function ProductsPage() {
             stock: "",
             categoryId: "",
             brandId: "",
+            is_gpm_product: false,
+            regular_price: "",
+            gpm_price: "",
+            vendor_id: "",
           });
           setImageFile(null);
           setIsSheetOpen(true);
