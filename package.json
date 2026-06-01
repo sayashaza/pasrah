@@ -2,10 +2,19 @@
   "name": "bigcart",
   "private": true,
   "packageManager": "npm@10.9.4",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": ["apps/*", "packages/*"],
+    "nohoist": [
+      "**/expo",
+      "**/expo/**",
+      "**/expo-router",
+      "**/expo-router/**",
+      "**/react-native",
+      "**/react-native/**",
+      "**/metro",
+      "**/metro/**"
+    ]
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -14,5 +23,9 @@
   },
   "devDependencies": {
     "turbo": "latest"
+  },
+  "dependencies": {
+    "cloudinary": "^2.10.0",
+    "firebase": "^12.14.0"
   }
 }

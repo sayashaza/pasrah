@@ -1,0 +1,61 @@
+# ─── SENSITIVE FILES ────────────────────────────────────────────────────────
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Firebase service account (JANGAN PERNAH UPLOAD!)
+firebase-adminsdk.json
+*-firebase-adminsdk-*.json
+*serviceAccount*.json
+
+# ─── DOCUMENTATION ──────────────────────────────────────────────────────────
+README.md
+*.md
+!apps/*/CHANGELOG.md
+
+# ─── DEPENDENCIES ───────────────────────────────────────────────────────────
+node_modules/
+
+# ─── BUILD OUTPUT ───────────────────────────────────────────────────────────
+# Next.js
+.next/
+out/
+
+# Expo / React Native
+.expo/
+dist/
+build/
+android/
+ios/
+
+# Turbo
+.turbo/
+
+# ─── LOGS ────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ─── OS FILES ────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+
+# ─── EDITOR ──────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── MISC ────────────────────────────────────────────────────────────────────
+*.pem
+.vercel
+.cache/
