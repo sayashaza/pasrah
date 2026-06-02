@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { 
   getEvents, createEvent, updateEvent, closeEvent, getEventSummary,
-  getVendorsByEvent, createVendor, 
-  getStocksByEvent, createStock 
+  getVendorsByEvent, createVendor, deleteVendor,
+  getStocksByEvent, createStock, deleteStock
 } from '../controllers/gpm.controller';
 import { verifyToken, requireRole } from '../middleware/auth.middleware';
 
@@ -20,9 +20,11 @@ router.get('/events/:id/summary', verifyToken, requireRole(['ADMIN']), getEventS
 // === Vendors ===
 router.get('/events/:eventId/vendors', getVendorsByEvent);
 router.post('/vendors', verifyToken, requireRole(['ADMIN']), createVendor);
+router.delete('/vendors/:id', verifyToken, requireRole(['ADMIN']), deleteVendor);
 
 // === Stocks ===
 router.get('/events/:eventId/stocks', getStocksByEvent);
 router.post('/stocks', verifyToken, requireRole(['ADMIN']), createStock);
+router.delete('/stocks/:id', verifyToken, requireRole(['ADMIN']), deleteStock);
 
 export default router;

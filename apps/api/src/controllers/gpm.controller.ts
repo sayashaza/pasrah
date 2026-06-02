@@ -162,3 +162,40 @@ export const createStock = async (req: Request, res: Response): Promise<void> =>
     res.status(500).json({ message: 'Error creating stock', error: error.message });
   }
 };
+
+export const deleteStock = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const docRef = db.collection('gpm_event_stocks').doc(id);
+    const doc = await docRef.get();
+    if (!doc.exists) {
+      res.status(404).json({ message: 'Stock not found' });
+      return;
+    }
+    await docRef.delete();
+    res.json({ message: 'Stock deleted successfully' });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Error deleting stock', error: error.message });
+  }
+};
+
+export const deleteVendor = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const docRef = db.collection('gpm_vendors').doc(id);
+    const doc = await docRef.get();
+    if (!doc.exists) {
+      res.status(404).json({ message: 'Vendor not found' });
+      return;
+    }
+    // Also delete all stocks associated with this vendor
+    const stocksSnap = await db.collection('gpm_event_stocks').where('vendor_id', '==', id).get();
+    const batch = db.batch();
+    stocksSnap.docs.forEach(d => batch.delete(d.ref));
+    batch.delete(docRef);
+    await batch.commit();
+    res.json({ message: 'Vendor and associated stocks deleted successfully' });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Error deleting vendor', error: error.message });
+  }
+};
