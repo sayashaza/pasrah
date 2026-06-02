@@ -70,9 +70,9 @@ export default function GpmEventsClient() {
       setIsSheetOpen(false);
       setFormData({ name: "", location: "", event_date: "", status: "draft" });
       loadEvents();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Failed to save GPM Event.");
+      alert(`Failed to save GPM Event: ${err.message}`);
     } finally {
       setIsSubmitting(false);
     }
